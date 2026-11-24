@@ -1,0 +1,43 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+    private static String sortChars(String str) {
+        char[] arr = str.toCharArray();
+        Arrays.sort(arr);
+        return new String(arr);
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNext()) {
+            sc.close();
+            return;
+        }
+
+        String s = sc.next();
+        int n = s.length();
+
+        // Cannot split into two non-empty strings if length is 1
+        if (n <= 1) {
+            System.out.println(s);
+            sc.close();
+            return;
+        }
+
+        String best = null;
+
+        for (int i = 1; i < n; i++) {
+            String leftSorted = sortChars(s.substring(0, i));
+            String rightSorted = sortChars(s.substring(i));
+            String candidate = leftSorted + rightSorted;
+
+            if (best == null || candidate.compareTo(best) < 0) {
+                best = candidate;
+            }
+        }
+
+        System.out.println(best);
+        sc.close();
+    }
+}
